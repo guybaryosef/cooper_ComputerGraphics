@@ -8,6 +8,7 @@ var canvas;
 var program;
 var points = [];    // the vertices of the cubes that make up the rubik's cube.
 var vBuffer;
+var theta = vec3(0, 0, 0);
 
 var colors = [];    // the colors of the cubes
 
@@ -89,7 +90,7 @@ function listenToEvents()
     var ctmLoc = gl.getUniformLocation(program, "ctm");
     gl.uniformMatrix4fv(ctmLoc, false, flatten(ctm));
 
-    var theta = vec3(0, 0, 0);
+
 
     const EventType = Object.freeze({
         SCALE:    Symbol("scale"),

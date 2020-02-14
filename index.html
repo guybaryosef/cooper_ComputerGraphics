@@ -11,6 +11,8 @@
     <script type="text/javascript" src="js/initializeCube.js"></script>
     <script type="text/javascript" src="js/rubiksCube.js"></script>
     <script type="text/javascript" src="js/rotateFace.js"></script>
+    <script type="text/javascript" src="js/JSON.js"></script>
+
 </head>
 
 <body>
@@ -25,12 +27,12 @@
     Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
 <br>
-<button id="rotateFaceRedNeg"><</button>Rotate Red Face<button id="rotateFaceRedPos">></button><br>
-<button id="rotateFaceCyanNeg"><</button>Rotate Cyan Face<button id="rotateFaceCyanPos">></button><br>
-<button id="rotateFaceOrangeNeg"><</button>Rotate Orange Face<button id="rotateFaceOrangePos">></button><br>
-<button id="rotateFaceYellowNeg"><</button>Rotate Yellow Face<button id="rotateFaceYellowPos">></button><br>
-<button id="rotateFaceBlueNeg"><</button>Rotate Blue Face<button id="rotateFaceBluePos">></button><br>
-<button id="rotateFaceGreenNeg"><</button>Rotate Green Face<button id="rotateFaceGreenPos">></button>
+<button id="rotateFaceRedNeg"><</button   >Rotate Red Face    <button id="rotateFaceRedPos">></button><br>
+<button id="rotateFaceCyanNeg"><</button  >Rotate Cyan Face   <button id="rotateFaceCyanPos">></button><br>
+<button id="rotateFaceOrangeNeg"><</button>Rotate Orange Face <button id="rotateFaceOrangePos">></button><br>
+<button id="rotateFaceYellowNeg"><</button>Rotate Yellow Face <button id="rotateFaceYellowPos">></button><br>
+<button id="rotateFaceBlueNeg"><</button  >Rotate Blue Face   <button id="rotateFaceBluePos">></button><br>
+<button id="rotateFaceGreenNeg"><</button >Rotate Green Face  <button id="rotateFaceGreenPos">></button>
 <br>
 <br>
 Random Scrambler
@@ -39,6 +41,10 @@ Random Scrambler
     <input type="text" id="randomScramblerNum" name="randomScramblerNum" value="0"><br>
     <input type="submit" value="Scramble!">
 </form>
+
+Save cube as JSON file with the name:
+
+Load cube as JSON file with the name:
 
 </body>
 
