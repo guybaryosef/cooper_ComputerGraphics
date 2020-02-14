@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <title>Rubik's Cube</title>
+
+    <script type="text/javascript" src="Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="Common/initShaders.js"></script>
+    <script type="text/javascript" src="Common/MV.js"></script>
+    <script type="text/javascript" src="js/initializeCube.js"></script>
+    <script type="text/javascript" src="js/rubiksCube.js"></script>
+    <script type="text/javascript" src="js/rotateFace.js"></script>
+</head>
+
+<body>
+<br>
+<br>
+<button id="rotateCubeXneg"><</button>Rotate X<button id="rotateCubeXpos">></button>
+<button id="rotateCubeYneg"><</button>Rotate Y<button id="rotateCubeYpos">></button>
+<button id="rotateCubeZneg"><</button>Rotate Z<button id="rotateCubeZpos">></button>
+<button id="scaleCubeSmaller"><</button>Scale<button id="scaleCubeLarger">></button>
+<br>
+<canvas id="gl-canvas" width="512" height="512">
+    Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+<br>
+<button id="rotateFaceRedNeg"><</button>Rotate Red Face<button id="rotateFaceRedPos">></button><br>
+<button id="rotateFaceCyanNeg"><</button>Rotate Cyan Face<button id="rotateFaceCyanPos">></button><br>
+<button id="rotateFaceOrangeNeg"><</button>Rotate Orange Face<button id="rotateFaceOrangePos">></button><br>
+<button id="rotateFaceYellowNeg"><</button>Rotate Yellow Face<button id="rotateFaceYellowPos">></button><br>
+<button id="rotateFaceBlueNeg"><</button>Rotate Blue Face<button id="rotateFaceBluePos">></button><br>
+<button id="rotateFaceGreenNeg"><</button>Rotate Green Face<button id="rotateFaceGreenPos">></button>
+<br>
+<br>
+Random Scrambler
+<form id="randomScamblerForm">
+    <label for="randomScramblerNum">Enter number of moves:</label>
+    <input type="text" id="randomScramblerNum" name="randomScramblerNum" value="0"><br>
+    <input type="submit" value="Scramble!">
+</form>
+
+</body>
+
+</html>

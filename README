@@ -1,0 +1,21 @@
+Done:
+
+1. Build a way to create the 26 cubes.
+    - They need to be in the correct orientation, with the correct sides colored.
+
+2. Create way for user to rotate the Rubik's cube in X, Y, and Z directions.
+
+3. Create 6 face objects, each with 9 cubes in a specific order.
+    - I should create a specific order for the cubes, and have a function that assigns for each face its cubes (call it
+    after each face rotation, after updating the cube order).
+
+4. Create face rotations, where cubes move (including moving from one face to another).
+    - Make this movement an animation.
+
+5. Include a random move generator, with variable number of moves.
+
+
+Todo:
+
+Stretch Goals:
+    - Creative interactions.
