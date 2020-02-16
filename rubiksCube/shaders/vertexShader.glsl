@@ -3,15 +3,15 @@ attribute vec4 vColor;
 
 varying   vec4 fColor;
 
-uniform   vec3 theta;
+uniform   vec2 theta;
 uniform   mat4 ctm;
 
 
 void main()
 {
-    vec3 angles = radians(theta);
-    vec3 c = cos(angles);
-    vec3 s = sin(angles);
+    vec2 angles = radians(theta);
+    vec2 c = cos(angles);
+    vec2 s = sin(angles);
 
     mat4 rx = mat4(1.0,  0.0,  0.0, 0.0,
     0.0,  c.x,  s.x, 0.0,
@@ -21,12 +21,8 @@ void main()
     0.0,  1.0,  0.0, 0.0,
     s.y,  0.0,  c.y, 0.0,
     0.0,  0.0,  0.0, 1.0);
-    mat4 rz = mat4(c.z, -s.z,  0.0, 0.0,
-    s.z,  c.z,  0.0, 0.0,
-    0.0,  0.0,  1.0, 0.0,
-    0.0,  0.0,  0.0, 1.0);
 
-    gl_Position = ctm * rx * ry * rz * vec4(vPosition, 1);
+    gl_Position = ctm * rx * ry * vec4(vPosition, 1);
 
     fColor      = vColor;
 }

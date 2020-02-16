@@ -3,47 +3,47 @@ function createRubiksCube()
 {
     let d = 0.33; // distance of one cube
 
-    faces["Orange"]["rotationPoint"] = vec3(0, 0, -d);
-    faces["Red"]["rotationPoint"]    = vec3(0, 0, d);
-    faces["Cyan"]["rotationPoint"]   = vec3(0, d, 0);
-    faces["Blue"]["rotationPoint"]   = vec3(0, -d, 0);
-    faces["Green"]["rotationPoint"]  = vec3(d, 0, 0);
-    faces["Yellow"]["rotationPoint"] = vec3(-d, 0, 0);
+    state.cube.faces["Orange"]["rotationPoint"] = vec3(0, 0, -d);
+    state.cube.faces["Red"]["rotationPoint"]    = vec3(0, 0, d);
+    state.cube.faces["Cyan"]["rotationPoint"]   = vec3(0, d, 0);
+    state.cube.faces["Blue"]["rotationPoint"]   = vec3(0, -d, 0);
+    state.cube.faces["Green"]["rotationPoint"]  = vec3(d, 0, 0);
+    state.cube.faces["Yellow"]["rotationPoint"] = vec3(-d, 0, 0);
 
-    cubeIndex[0] = createCube(vec3(-d, d, d));
-    cubeIndex[1] = createCube(vec3(0,  d, d));
-    cubeIndex[2] = createCube(vec3(d,  d, d));
+    state.cube.idx[0] = createCube(vec3(-d, d, d));
+    state.cube.idx[1] = createCube(vec3(0,  d, d));
+    state.cube.idx[2] = createCube(vec3(d,  d, d));
 
-    cubeIndex[3] = createCube(vec3(-d, 0, d));
-    cubeIndex[4] = createCube(vec3(0,  0, d));
-    cubeIndex[5] = createCube(vec3(d,  0, d));
+    state.cube.idx[3] = createCube(vec3(-d, 0, d));
+    state.cube.idx[4] = createCube(vec3(0,  0, d));
+    state.cube.idx[5] = createCube(vec3(d,  0, d));
 
-    cubeIndex[6] = createCube(vec3(-d,-d, d));
-    cubeIndex[7] = createCube(vec3(0, -d, d));
-    cubeIndex[8] = createCube(vec3(d, -d, d));
+    state.cube.idx[6] = createCube(vec3(-d,-d, d));
+    state.cube.idx[7] = createCube(vec3(0, -d, d));
+    state.cube.idx[8] = createCube(vec3(d, -d, d));
 
-    cubeIndex[9] = createCube(vec3(-d, d, 0));
-    cubeIndex[10] = createCube(vec3(0,  d, 0));
-    cubeIndex[11] = createCube(vec3(d,  d, 0));
+    state.cube.idx[9] = createCube(vec3(-d, d, 0));
+    state.cube.idx[10] = createCube(vec3(0,  d, 0));
+    state.cube.idx[11] = createCube(vec3(d,  d, 0));
 
-    cubeIndex[12] = createCube(vec3(-d, 0, 0));
-    cubeIndex[14] = createCube(vec3(d,  0, 0));
+    state.cube.idx[12] = createCube(vec3(-d, 0, 0));
+    state.cube.idx[14] = createCube(vec3(d,  0, 0));
 
-    cubeIndex[15] = createCube(vec3(-d,-d, 0));
-    cubeIndex[16] = createCube(vec3(0, -d, 0));
-    cubeIndex[17] = createCube(vec3(d, -d, 0));
+    state.cube.idx[15] = createCube(vec3(-d,-d, 0));
+    state.cube.idx[16] = createCube(vec3(0, -d, 0));
+    state.cube.idx[17] = createCube(vec3(d, -d, 0));
 
-    cubeIndex[18] = createCube(vec3(-d, d,-d));
-    cubeIndex[19] = createCube(vec3(0,  d,-d));
-    cubeIndex[20] = createCube(vec3(d,  d,-d));
+    state.cube.idx[18] = createCube(vec3(-d, d,-d));
+    state.cube.idx[19] = createCube(vec3(0,  d,-d));
+    state.cube.idx[20] = createCube(vec3(d,  d,-d));
 
-    cubeIndex[21] = createCube(vec3(-d, 0,-d));
-    cubeIndex[22] = createCube(vec3(0,  0,-d));
-    cubeIndex[23] = createCube(vec3(d,  0,-d));
+    state.cube.idx[21] = createCube(vec3(-d, 0,-d));
+    state.cube.idx[22] = createCube(vec3(0,  0,-d));
+    state.cube.idx[23] = createCube(vec3(d,  0,-d));
 
-    cubeIndex[24] = createCube(vec3(-d,-d,-d));
-    cubeIndex[25] = createCube(vec3(0, -d,-d));
-    cubeIndex[26] = createCube(vec3(d, -d,-d));
+    state.cube.idx[24] = createCube(vec3(-d,-d,-d));
+    state.cube.idx[25] = createCube(vec3(0, -d,-d));
+    state.cube.idx[26] = createCube(vec3(d, -d,-d));
 
     populateFace();
 }
@@ -52,7 +52,7 @@ function createRubiksCube()
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createCube(center)
 {
-    const beg_ind = points.length;
+    const beg_ind = state.cube.points.length;
 
     createCube.quad = function(p1, p2, p3, p4, color)
     {
@@ -60,8 +60,8 @@ function createCube(center)
 
         for (let i = 0; i < ind.length; ++i)
         {
-            points.push(add(center, vertices[ind[i]]) );
-            colors.push(vertexColors[color]);
+            state.cube.points.push(add(center, vertices[ind[i]]) );
+            state.cube.colors.push(vertexColors[color]);
         }
     };
 
