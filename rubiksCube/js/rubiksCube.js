@@ -87,24 +87,33 @@ function listenToEvents()
         }
     };
 
+    // rotate the rubik's cube faces & middles (9 total, w/ 2 directions for each)
+    document.getElementById("rotateFaceRedNeg").onclick = () => {addRotation("Red", -1);};
+    document.getElementById("rotateFaceRedPos").onclick = () => {addRotation("Red", 1);};
 
-    document.getElementById("rotateFaceRedNeg").onclick = () => {rotateFace("Red", -1);};
-    document.getElementById("rotateFaceRedPos").onclick = () => {rotateFace("Red", 1);};
+    document.getElementById("rotateFaceCyanNeg").onclick = () => {addRotation("Cyan", -1);};
+    document.getElementById("rotateFaceCyanPos").onclick = () => {addRotation("Cyan", 1);};
 
-    document.getElementById("rotateFaceCyanNeg").onclick = () => {rotateFace("Cyan", -1);};
-    document.getElementById("rotateFaceCyanPos").onclick = () => {rotateFace("Cyan", 1);};
+    document.getElementById("rotateFaceOrangeNeg").onclick = () => {addRotation("Orange", -1);};
+    document.getElementById("rotateFaceOrangePos").onclick = () => {addRotation("Orange", 1);};
 
-    document.getElementById("rotateFaceOrangeNeg").onclick = () => {rotateFace("Orange", -1);};
-    document.getElementById("rotateFaceOrangePos").onclick = () => {rotateFace("Orange", 1);};
+    document.getElementById("rotateFaceGreenNeg").onclick = () => {addRotation("Green", -1);};
+    document.getElementById("rotateFaceGreenPos").onclick = () => {addRotation("Green", 1);};
 
-    document.getElementById("rotateFaceGreenNeg").onclick = () => {rotateFace("Green", -1);};
-    document.getElementById("rotateFaceGreenPos").onclick = () => {rotateFace("Green", 1);};
+    document.getElementById("rotateFaceBlueNeg").onclick = () => {addRotation("Blue", -1);};
+    document.getElementById("rotateFaceBluePos").onclick = () => {addRotation("Blue", 1);};
 
-    document.getElementById("rotateFaceBlueNeg").onclick = () => {rotateFace("Blue", -1);};
-    document.getElementById("rotateFaceBluePos").onclick = () => {rotateFace("Blue", 1);};
+    document.getElementById("rotateFaceYellowNeg").onclick = () => {addRotation("Yellow", -1);};
+    document.getElementById("rotateFaceYellowPos").onclick = () => {addRotation("Yellow", 1);};
 
-    document.getElementById("rotateFaceYellowNeg").onclick = () => {rotateFace("Yellow", -1);};
-    document.getElementById("rotateFaceYellowPos").onclick = () => {rotateFace("Yellow", 1);};
+    document.getElementById("rotateMiddle1Pos").onclick = () => {addRotation("Middle1", -1);};
+    document.getElementById("rotateMiddle1Neg").onclick = () => {addRotation("Middle1", 1);};
+
+    document.getElementById("rotateMiddle2Pos").onclick = () => {addRotation("Middle2", -1);};
+    document.getElementById("rotateMiddle2Neg").onclick = () => {addRotation("Middle2", 1);};
+
+    document.getElementById("rotateMiddle3Pos").onclick = () => {addRotation("Middle3", -1);};
+    document.getElementById("rotateMiddle3Neg").onclick = () => {addRotation("Middle3", 1);};
 
     // scramble cube randomly
     document.getElementById("randomScamblerForm")
@@ -120,15 +129,33 @@ function listenToEvents()
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function isSolved()
+{
+    for (let i=0; i<state.cube.idx.length; ++i)
+    {
+        if (state.cube.idx[i] != state.cube.solvedCube[i])
+        {
+            document.getElementById("solvedCube").textContent = "";
+            return;
+        }
+    }
+    document.getElementById("solvedCube").textContent = "Cube is Solved!!!";
+}
+//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function render()
 {
     state.gl.clear(state.gl.COLOR_BUFFER_BIT | state.gl.DEPTH_BUFFER_BIT);
 
-    state.gl.drawArrays(state.gl.TRIANGLES, 0, state.cube.points.length);
+    processFaceRotationQueue();
+    isSolved();
 
     // update uniform variables
     state.gl.uniform2fv(state.view.thetaLoc, flatten(state.view.theta));
     state.gl.uniformMatrix4fv(state.view.ctmLoc, false, flatten(state.view.ctm));
+
+    state.gl.drawArrays(state.gl.TRIANGLES, 0, state.cube.points.length);
 
     // updates screen at next possible moment, then exits current render() and execute specified fnc (render again).
     requestAnimFrame(render);

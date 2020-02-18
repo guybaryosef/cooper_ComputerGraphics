@@ -1,0 +1,79 @@
+
+#gl-canvas {
+    float: left;
+}
+
+#interactive {
+    float: right;
+    width: 50%;
+    margin-top: 100px;
+}
+
+button {
+    width: 100px;
+    margin: 5px;
+}
+
+#rotateFaceRedNeg, #rotateFaceRedPos{
+    background-color: #f44336;
+}
+
+#rotateFaceCyanNeg, #rotateFaceCyanPos {
+    background-color: #3bddf4;
+}
+
+#rotateFaceOrangeNeg, #rotateFaceOrangePos {
+    background-color: #f4b926;
+}
+
+#rotateFaceYellowNeg, #rotateFaceYellowPos {
+    background-color: #f4e803;
+}
+
+#rotateFaceBlueNeg, #rotateFaceBluePos {
+    background-color: #2f30f4;
+}
+
+#rotateFaceGreenNeg, #rotateFaceGreenPos {
+    background-color: #05f431;
+}
+
+
+
+
+.redButton {
+    color: #f44336;
+    font-size: 22px;
+}
+
+.cyanButton {
+    color: #3bddf4;
+    font-size: 22px;
+}
+
+.orangeButton {
+    color: #f4b926;
+    font-size: 22px;
+}
+
+.yellowButton {
+    color: #f4e803;
+    font-size: 22px;
+}
+
+.blueButton {
+    color: #2f30f4;
+    font-size: 22px;
+}
+
+.greenButton {
+    color: #20f44e;
+    font-size: 22px;
+}
+
+
+
+#solvedCube {
+    font-size: 25px;
+    white-space: pre-wrap;
+}

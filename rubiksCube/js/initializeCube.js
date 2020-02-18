@@ -10,6 +10,10 @@ function createRubiksCube()
     state.cube.faces["Green"]["rotationPoint"]  = vec3(d, 0, 0);
     state.cube.faces["Yellow"]["rotationPoint"] = vec3(-d, 0, 0);
 
+    state.cube.faces["Middle1"]["rotationPoint"] = vec3(0, 0, 0);
+    state.cube.faces["Middle2"]["rotationPoint"] = vec3(0, 0, 0);
+    state.cube.faces["Middle3"]["rotationPoint"] = vec3(0, 0, 0);
+
     state.cube.idx[0] = createCube(vec3(-d, d, d));
     state.cube.idx[1] = createCube(vec3(0,  d, d));
     state.cube.idx[2] = createCube(vec3(d,  d, d));
@@ -27,6 +31,7 @@ function createRubiksCube()
     state.cube.idx[11] = createCube(vec3(d,  d, 0));
 
     state.cube.idx[12] = createCube(vec3(-d, 0, 0));
+    state.cube.idx[13] = createCube(vec3(0, 0, 0));
     state.cube.idx[14] = createCube(vec3(d,  0, 0));
 
     state.cube.idx[15] = createCube(vec3(-d,-d, 0));
@@ -46,6 +51,8 @@ function createRubiksCube()
     state.cube.idx[26] = createCube(vec3(d, -d,-d));
 
     populateFace();
+
+    state.cube.solvedCube = Array.from(state.cube.idx);
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

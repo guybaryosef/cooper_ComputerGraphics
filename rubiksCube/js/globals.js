@@ -8,7 +8,11 @@ var state = {
             lastX: -1,
             lastY: -1,
         },
-        pressedKeys: {},
+
+        inRotation: false,
+        ROTATION_DELAY: 5,
+        ROTATION_DEG: 3,
+        rotationQueue: [],
     },
     cube: {
         CUBE_SIZE: 36,
@@ -43,19 +47,26 @@ var state = {
             Orange: {
                 rotationPoint: vec3(),
                 points: new Array(9).fill(0),
+            },
+            Middle1: {
+                rotationPoint: vec3(),
+                points: new Array(9).fill(0),
+            },
+            Middle2: {
+                rotationPoint: vec3(),
+                points: new Array(9).fill(0),
+            },
+            Middle3: {
+                rotationPoint: vec3(),
+                points: new Array(9).fill(0),
             }
         },
+        solvedCube: [],
     },
     view: {
-
         theta: [0,0],
         thetaLoc: null,
         ctmLoc: null,
         ctm: mat4(),
-        eye: {
-            x:2.,
-            y:2.,
-            z:7.,
-        },
     },
 };

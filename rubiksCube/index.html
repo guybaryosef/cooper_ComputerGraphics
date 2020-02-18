@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>Rubik's Cube</title>
 
+    <link rel="stylesheet" type="text/css" href="css/general.css">
+
     <script type="text/javascript" src="Common/webgl-utils.js"></script>
     <script type="text/javascript" src="Common/initShaders.js"></script>
     <script type="text/javascript" src="Common/MV.js"></script>
@@ -19,38 +21,43 @@
 </head>
 
 <body>
-
-<br>
-<canvas id="gl-canvas" width="512" height="512">
+<canvas id="gl-canvas" height="512px" width="512px" >
     Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
-<br>
-<button id="rotateFaceRedNeg"><</button   >Rotate Red Face    <button id="rotateFaceRedPos">></button><br>
-<button id="rotateFaceCyanNeg"><</button  >Rotate Cyan Face   <button id="rotateFaceCyanPos">></button><br>
-<button id="rotateFaceOrangeNeg"><</button>Rotate Orange Face <button id="rotateFaceOrangePos">></button><br>
-<button id="rotateFaceYellowNeg"><</button>Rotate Yellow Face <button id="rotateFaceYellowPos">></button><br>
-<button id="rotateFaceBlueNeg"><</button  >Rotate Blue Face   <button id="rotateFaceBluePos">></button><br>
-<button id="rotateFaceGreenNeg"><</button >Rotate Green Face  <button id="rotateFaceGreenPos">></button>
-<br>
-<br>
-Random Scrambler
-<form id="randomScamblerForm">
-    <label for="randomScramblerNum">Enter number of moves:</label>
-    <input type="text" id="randomScramblerNum" name="randomScramblerNum" value="0">
-    <input type="submit" value="Scramble!">
-</form>
-<br>
-<form id="saveCubeForm">
-    <label for="saveCube">Enter file name to create as a cube exporter:</label>
-    <input type="text" id="saveCube" name="saveCube">
-    <input type="submit" value="Save!">
-</form>
-<form id="loadCubeForm">
-    <label for="loadCubeInput">Enter cube file to load:</label>
-    <input type="file" id="loadCubeInput" name="loadCubeInput">
-    <input type="submit" value="Load!">
-</form>
 
+<div id="interactive">
+    <button id="rotateFaceRedNeg"><</button   ><span class="redButton"> Rotate Red Face &nbsp &nbsp&nbsp&nbsp</span><button id="rotateFaceRedPos">></button><br>
+    <button id="rotateFaceCyanNeg"><</button  ><span class="cyanButton"> Rotate Cyan Face  &nbsp&nbsp </span><button id="rotateFaceCyanPos">></button><br>
+    <button id="rotateFaceOrangeNeg"><</button><span class="orangeButton"> Rotate Orange Face </span><button id="rotateFaceOrangePos">></button><br>
+    <button id="rotateFaceYellowNeg"><</button><span class="yellowButton"> Rotate Yellow Face &nbsp</span><button id="rotateFaceYellowPos">></button><br>
+    <button id="rotateFaceBlueNeg"><</button  ><span class="blueButton"> Rotate Blue Face  &nbsp&nbsp&nbsp </span><button id="rotateFaceBluePos">></button><br>
+    <button id="rotateFaceGreenNeg"><</button ><span class="greenButton"> Rotate Green Face &nbsp </span><button id="rotateFaceGreenPos">></button>
+    <br>
+    <button id="rotateMiddle1Neg"><</button ><span id="middle1"> Rotate <span class="orangeButton">Orange</span>-<span class="yellowButton">Yellow</span>-<span class="greenButton">Green</span>-<span class="redButton">Red</span>     <button id="rotateMiddle1Pos">></button><br>
+    <button id="rotateMiddle2Neg"><</button ><span id="middle2"> Rotate <span class="orangeButton">Orange</span>-<span class="cyanButton">Cyan</span>-<span class="blueButton">Blue</span>-<span class="redButton">Red</span> &nbsp &nbsp &nbsp</span><button id="rotateMiddle2Pos">></button><br>
+    <button id="rotateMiddle3Neg"><</button ><span id="middle3"> Rotate <span class="yellowButton">Yellow</span>-<span class="blueButton">Blue</span>-<span class="greenButton">Green</span>-<span class="cyanButton">Cyan</span> &nbsp </span><button id="rotateMiddle3Pos">></button>
+    <br>
+    <br>
+    Random Scrambler
+    <form id="randomScamblerForm">
+        <label for="randomScramblerNum">Enter number of moves:</label>
+        <input type="text" id="randomScramblerNum" name="randomScramblerNum" value="0">
+        <input type="submit" value="Scramble!">
+    </form>
+    <br>
+    <form id="saveCubeForm">
+        <label for="saveCube">Enter file name to create as a cube exporter:</label>
+        <input type="text" id="saveCube" name="saveCube">
+        <input type="submit" value="Save!">
+    </form>
+    <form id="loadCubeForm">
+        <label for="loadCubeInput">Enter cube file to load:</label>
+        <input type="file" id="loadCubeInput" name="loadCubeInput">
+        <input type="submit" value="Load!">
+    </form>
+        <br>
+    <div id="solvedCube">asdf</div>
+</div>
 </body>
 
 </html>
