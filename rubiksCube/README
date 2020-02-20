@@ -16,11 +16,12 @@ Done:
 
 6. Rotate full cube based on holding and dragging the mouse - get rid of cube translations.
 
+7. Bring all rotations to the vertex shader?
+
 8. Add rotations to 3 middle faces.
 
-9. Save and load cube from .txt file.
 
 Todo:
-7. Bring all rotations to the vertex shader?
+9. Save and load cube from .txt file.
 
 

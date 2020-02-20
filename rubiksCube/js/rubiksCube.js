@@ -2,7 +2,7 @@
 
 
 var vBuffer;
-
+var cBuffer;
 
 window.onload = function init()
 {
@@ -22,8 +22,9 @@ window.onload = function init()
     createRubiksCube();
 
     // initialize the uniform variables
-    state.view.thetaLoc = state.gl.getUniformLocation(state.program, "theta");
-    state.view.ctmLoc = state.gl.getUniformLocation(state.program, "ctm");
+    state.view.thetaLoc  = state.gl.getUniformLocation(state.program, "theta");
+    state.view.ctmLoc    = state.gl.getUniformLocation(state.program, "ctm");
+    state.cube.rotMatLoc = state.gl.getUniformLocation(state.program, "rotMat");
 
     vBuffer = state.gl.createBuffer();
     state.gl.bindBuffer(state.gl.ARRAY_BUFFER, vBuffer);
@@ -33,7 +34,7 @@ window.onload = function init()
     state.gl.vertexAttribPointer(vPosition, 3, state.gl.FLOAT, false, 0, 0);
     state.gl.enableVertexAttribArray(vPosition);
 
-    var cBuffer = state.gl.createBuffer();
+    cBuffer = state.gl.createBuffer();
     state.gl.bindBuffer(state.gl.ARRAY_BUFFER, cBuffer);
     state.gl.bufferData(state.gl.ARRAY_BUFFER, flatten(state.cube.colors), state.gl.STATIC_DRAW);
 
@@ -131,9 +132,9 @@ function listenToEvents()
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function isSolved()
 {
-    for (let i=0; i<state.cube.idx.length; ++i)
+    for (let i=0; i<state.cube.subCubes.length; ++i)
     {
-        if (state.cube.idx[i] != state.cube.solvedCube[i])
+        if (state.cube.subCubes[i].idx != state.cube.solvedCube[i].idx)
         {
             document.getElementById("solvedCube").textContent = "";
             return;
@@ -151,11 +152,14 @@ function render()
     processFaceRotationQueue();
     isSolved();
 
-    // update uniform variables
     state.gl.uniform2fv(state.view.thetaLoc, flatten(state.view.theta));
     state.gl.uniformMatrix4fv(state.view.ctmLoc, false, flatten(state.view.ctm));
 
-    state.gl.drawArrays(state.gl.TRIANGLES, 0, state.cube.points.length);
+    // update uniform variables
+    state.cube.subCubes.forEach((val) => {
+        state.gl.uniformMatrix4fv(state.cube.rotMatLoc, false, flatten(val.rotMat));
+        state.gl.drawArrays(state.gl.TRIANGLES, val.idx, state.cube.CUBE_SIZE);
+    });
 
     // updates screen at next possible moment, then exits current render() and execute specified fnc (render again).
     requestAnimFrame(render);

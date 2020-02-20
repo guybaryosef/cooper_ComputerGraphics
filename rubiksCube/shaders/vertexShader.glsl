@@ -5,6 +5,7 @@ varying   vec4 fColor;
 
 uniform   vec2 theta;
 uniform   mat4 ctm;
+uniform   mat4 rotMat;
 
 
 void main()
@@ -22,7 +23,7 @@ void main()
     s.y,  0.0,  c.y, 0.0,
     0.0,  0.0,  0.0, 1.0);
 
-    gl_Position = ctm * rx * ry * vec4(vPosition, 1);
+    gl_Position = ctm * rx * ry * rotMat * vec4(vPosition, 1);
 
     fColor      = vColor;
 }

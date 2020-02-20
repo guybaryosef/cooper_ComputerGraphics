@@ -14,45 +14,126 @@ function createRubiksCube()
     state.cube.faces["Middle2"]["rotationPoint"] = vec3(0, 0, 0);
     state.cube.faces["Middle3"]["rotationPoint"] = vec3(0, 0, 0);
 
-    state.cube.idx[0] = createCube(vec3(-d, d, d));
-    state.cube.idx[1] = createCube(vec3(0,  d, d));
-    state.cube.idx[2] = createCube(vec3(d,  d, d));
+    state.cube.subCubes[0] = {
+        idx: createCube(vec3(-d, d, d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[1] = {
+        idx: createCube(vec3(0,  d, d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[2] = {
+        idx: createCube(vec3(d,  d, d)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[3] = createCube(vec3(-d, 0, d));
-    state.cube.idx[4] = createCube(vec3(0,  0, d));
-    state.cube.idx[5] = createCube(vec3(d,  0, d));
+    state.cube.subCubes[3] = {
+        idx: createCube(vec3(-d, 0, d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[4] = {
+        idx: createCube(vec3(0,  0, d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[5] = {
+        idx: createCube(vec3(d,  0, d)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[6] = createCube(vec3(-d,-d, d));
-    state.cube.idx[7] = createCube(vec3(0, -d, d));
-    state.cube.idx[8] = createCube(vec3(d, -d, d));
+    state.cube.subCubes[6] = {
+        idx: createCube(vec3(-d,-d, d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[7] = {
+        idx: createCube(vec3(0, -d, d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[8] = {
+        idx: createCube(vec3(d, -d, d)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[9] = createCube(vec3(-d, d, 0));
-    state.cube.idx[10] = createCube(vec3(0,  d, 0));
-    state.cube.idx[11] = createCube(vec3(d,  d, 0));
+    state.cube.subCubes[9] = {
+        idx: createCube(vec3(-d, d, 0)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[10] = {
+        idx: createCube(vec3(0,  d, 0)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[11] = {
+        idx: createCube(vec3(d,  d, 0)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[12] = createCube(vec3(-d, 0, 0));
-    state.cube.idx[13] = createCube(vec3(0, 0, 0));
-    state.cube.idx[14] = createCube(vec3(d,  0, 0));
+    state.cube.subCubes[12] = {
+        idx: createCube(vec3(-d, 0, 0)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[13] = {
+        idx: createCube(vec3(0, 0, 0)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[14] = {
+        idx: createCube(vec3(d,  0, 0)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[15] = createCube(vec3(-d,-d, 0));
-    state.cube.idx[16] = createCube(vec3(0, -d, 0));
-    state.cube.idx[17] = createCube(vec3(d, -d, 0));
+    state.cube.subCubes[15] = {
+        idx: createCube(vec3(-d,-d, 0)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[16] = {
+        idx: createCube(vec3(0, -d, 0)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[17] = {
+        idx: createCube(vec3(d, -d, 0)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[18] = createCube(vec3(-d, d,-d));
-    state.cube.idx[19] = createCube(vec3(0,  d,-d));
-    state.cube.idx[20] = createCube(vec3(d,  d,-d));
+    state.cube.subCubes[18] = {
+        idx: createCube(vec3(-d, d,-d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[19] = {
+        idx: createCube(vec3(0,  d,-d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[20] = {
+        idx: createCube(vec3(d,  d,-d)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[21] = createCube(vec3(-d, 0,-d));
-    state.cube.idx[22] = createCube(vec3(0,  0,-d));
-    state.cube.idx[23] = createCube(vec3(d,  0,-d));
+    state.cube.subCubes[21] = {
+        idx: createCube(vec3(-d, 0,-d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[22] = {
+        idx: createCube(vec3(0,  0,-d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[23] = {
+        idx: createCube(vec3(d,  0,-d)),
+        rotMat: mat4(),
+    };
 
-    state.cube.idx[24] = createCube(vec3(-d,-d,-d));
-    state.cube.idx[25] = createCube(vec3(0, -d,-d));
-    state.cube.idx[26] = createCube(vec3(d, -d,-d));
+    state.cube.subCubes[24] = {
+        idx: createCube(vec3(-d,-d,-d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[25] = {
+        idx: createCube(vec3(0, -d,-d)),
+        rotMat: mat4(),
+    };
+    state.cube.subCubes[26] = {
+        idx: createCube(vec3(d, -d,-d)),
+        rotMat: mat4(),
+    };
 
     populateFace();
 
-    state.cube.solvedCube = Array.from(state.cube.idx);
+    state.cube.solvedCube = Array.from(state.cube.subCubes);
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

@@ -16,10 +16,11 @@ var state = {
     },
     cube: {
         CUBE_SIZE: 36,
-        idx: new Array(27).fill(0),
+        subCubes: new Array(27).fill(0),
         points: [],
         colors: [],
-
+        solvedCube: [],
+        rotMatLoc: null,
         // An object of 6 faces, each holding the 9 beginning index in 'points' of the cubes in the face.
         // The indexes are ordered usch that if one looks at the face from the center of the cube, we list the elements in ro-
         // major order.
@@ -61,7 +62,6 @@ var state = {
                 points: new Array(9).fill(0),
             }
         },
-        solvedCube: [],
     },
     view: {
         theta: [0,0],
