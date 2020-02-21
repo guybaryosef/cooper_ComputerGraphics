@@ -66,7 +66,6 @@ var state = {
     view: {
         theta: [0,0],
         thetaLoc: null,
-        ctmLoc: null,
-        ctm: mat4(),
+        ctmLoc: null
     },
 };

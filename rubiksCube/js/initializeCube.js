@@ -133,7 +133,10 @@ function createRubiksCube()
 
     populateFace();
 
-    state.cube.solvedCube = Array.from(state.cube.subCubes);
+    state.cube.solvedCube = [];
+    state.cube.subCubes.forEach((val) => {
+        state.cube.solvedCube.push(val.idx);
+    });
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

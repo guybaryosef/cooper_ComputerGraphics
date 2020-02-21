@@ -6,6 +6,7 @@ function saveFileAsJSON(event)
     let file_name = (document.getElementById("saveCube").value != "" ) ?
         document.getElementById("saveCube").value : "rubiksCube.json";
 
+
     let stateJSON = JSON.stringify(state);
 
     let blob = new Blob([stateJSON], {type: "application/json"});
@@ -34,17 +35,16 @@ function loadFileFromJSON(event)
 
 function receivedText(e) {
     let lines = e.target.result;
+
     let newArr = JSON.parse(lines);
-    console.log(newArr);
-    state.cube.subCubes = newArr.cube.subCubes;
+
+    for (let i=0; i<27; ++i)
+    {
+        state.cube.subCubes[i].idx    = newArr.cube.subCubes[i].idx;
+        state.cube.subCubes[i].rotMat = newArr.cube.subCubes[i].rotMat;
+        state.cube.subCubes[i].rotMat.matrix = true;
+    }
     state.cube.faces = newArr.cube.faces;
 
     state.view.theta = newArr.view.theta;
-    state.view.ctm   = newArr.view.ctm;
-
-    state.gl.bindBuffer(state.gl.ARRAY_BUFFER, vBuffer);
-    state.gl.bufferData(state.gl.ARRAY_BUFFER, flatten(state.cube.points), state.gl.STATIC_DRAW);
-
-    state.gl.bindBuffer(state.gl.ARRAY_BUFFER, cBuffer);
-    state.gl.bufferData(state.gl.ARRAY_BUFFER, flatten(state.cube.colors), state.gl.STATIC_DRAW);
 }

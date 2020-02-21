@@ -1,9 +1,6 @@
 
 
 
-var vBuffer;
-var cBuffer;
-
 window.onload = function init()
 {
     let canvas = document.getElementById("gl-canvas");
@@ -26,19 +23,19 @@ window.onload = function init()
     state.view.ctmLoc    = state.gl.getUniformLocation(state.program, "ctm");
     state.cube.rotMatLoc = state.gl.getUniformLocation(state.program, "rotMat");
 
-    vBuffer = state.gl.createBuffer();
+    let vBuffer = state.gl.createBuffer();
     state.gl.bindBuffer(state.gl.ARRAY_BUFFER, vBuffer);
     state.gl.bufferData(state.gl.ARRAY_BUFFER, flatten(state.cube.points), state.gl.STATIC_DRAW);
 
-    var vPosition = state.gl.getAttribLocation(state.program, "vPosition");
+    let vPosition = state.gl.getAttribLocation(state.program, "vPosition");
     state.gl.vertexAttribPointer(vPosition, 3, state.gl.FLOAT, false, 0, 0);
     state.gl.enableVertexAttribArray(vPosition);
 
-    cBuffer = state.gl.createBuffer();
+    let cBuffer = state.gl.createBuffer();
     state.gl.bindBuffer(state.gl.ARRAY_BUFFER, cBuffer);
     state.gl.bufferData(state.gl.ARRAY_BUFFER, flatten(state.cube.colors), state.gl.STATIC_DRAW);
 
-    var vColor = state.gl.getAttribLocation(state.program, "vColor");
+    let vColor = state.gl.getAttribLocation(state.program, "vColor");
     state.gl.vertexAttribPointer(vColor, 4, state.gl.FLOAT, false, 0, 0);
     state.gl.enableVertexAttribArray(vColor);
 
@@ -134,7 +131,7 @@ function isSolved()
 {
     for (let i=0; i<state.cube.subCubes.length; ++i)
     {
-        if (state.cube.subCubes[i].idx != state.cube.solvedCube[i].idx)
+        if (state.cube.subCubes[i].idx !== state.cube.solvedCube[i])
         {
             document.getElementById("solvedCube").textContent = "";
             return;
@@ -153,7 +150,11 @@ function render()
     isSolved();
 
     state.gl.uniform2fv(state.view.thetaLoc, flatten(state.view.theta));
-    state.gl.uniformMatrix4fv(state.view.ctmLoc, false, flatten(state.view.ctm));
+
+    // The wierdest thing- I cannot get rid of this next line & line 23 (which connects ctmLoc to the "ctm" variable in
+    // the vertex shader). This strange to me, because there is no ctm uniform in the vertex shader. Yet still, without
+    // this uniform being passed on the rubkis cube does not render.
+    state.gl.uniformMatrix4fv(state.view.ctmLoc, false, flatten(mat4()));
 
     // update uniform variables
     state.cube.subCubes.forEach((val) => {
