@@ -1,0 +1,23 @@
+Done:
+
+1. Set up both a perspective and orthogonal projection views. We'll see later on which we will stick with.
+
+2. Add basic interactive viewing so that we can spin 360 degrees about the cube.
+
+3. Create a texture cube made up of solid colors.
+
+4. Create a cube object that will show the reflection of the texture cube.
+
+TODO:
+
+5. Fix the view so that we can see 360 degrees without anything getting cut off or weird.
+
+6. Make the inside cube a different color (glass-y / see through).
+
+7. Add different shapes to be reflectors.
+
+8. Add different cube map pictures.
+
+9. Add shapes flying through the air.
+
+10. Add a light source.
