@@ -18,21 +18,22 @@ var state = {
         normals: [],
         textureObj: null,
         textureLoc: null,
-        textureSampler: null
+        textureSampler: null,
     },
     view: {
         modelViewMatrixLoc: null,
         projectionMatrixLoc: null,
 
-
         aspect: null,
-        clipCordNeg: -1,
-        clipCordPos: 1,
-        theta: Math.PI/2,
-        phi:   0,
-        radius: 0,
-        eye: vec3(0,0,0),
+        near: 1,
+        far:  10,
+        fovy: 60,           // in degrees
+
+        phi: 0,
+        theta: 0,
+        radius: 2,
+        eye: vec3(0, 0, 0),
         at: vec3(0,0,0),    // origin
-        up: vec3(0,1,0)     // y coordinate
+        up: vec3(0,1,0),    // y coordinate
     },
 };
