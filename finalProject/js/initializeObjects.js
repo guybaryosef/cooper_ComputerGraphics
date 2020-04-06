@@ -1,22 +1,22 @@
 
 
-function configureCubeMap(which_one) {
-
+function configureCubeMap(which_one)
+{
     state.cubeMap.textureObj = state.gl.createTexture();
     state.gl.bindTexture(state.gl.TEXTURE_CUBE_MAP, state.cubeMap.textureObj);
-    state.gl.activeTexture(state.gl.TEXTURE0);
 
     switch(which_one)
     {
-        case "Cube":    textureColors();                break;
         case "Museum":  loadCubeImages("museum"); break;
         case "Skybox":  loadCubeImages("skybox"); break;
+        case "Bridge":  loadCubeImages("bridge"); break;
+        case "Yoko":  loadCubeImages("yokohama"); break;
+        case "Chapel":  loadCubeImages("chapel"); break;
+
     }
 
-    state.gl.texParameteri(state.gl.TEXTURE_CUBE_MAP,state.gl.TEXTURE_MAG_FILTER,state.gl.NEAREST);
-    state.gl.texParameteri(state.gl.TEXTURE_CUBE_MAP,state.gl.TEXTURE_MIN_FILTER,state.gl.NEAREST);
-
-    state.gl.uniform1i(state.cubeMap.textureLoc, 0);  // 0-default texture unit
+    state.gl.texParameteri(state.gl.TEXTURE_CUBE_MAP, state.gl.TEXTURE_MAG_FILTER, state.gl.NEAREST);
+    state.gl.texParameteri(state.gl.TEXTURE_CUBE_MAP, state.gl.TEXTURE_MIN_FILTER, state.gl.NEAREST);
 }
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -36,42 +36,61 @@ function loadCubeImages(cube)
     let image_files = [];
     switch(cube)
     {
+        case "bridge":
+            image_files = [
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/GoldenGateBridge/posx.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/GoldenGateBridge/negx.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/GoldenGateBridge/posy.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/GoldenGateBridge/negy.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/GoldenGateBridge/posz.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/GoldenGateBridge/negz.jpg", 2048]
+            ];
+            break;
+        case "yokohama":
+            image_files = [
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/Yokohama/posx.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/Yokohama/negx.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/Yokohama/posy.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/Yokohama/negy.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/Yokohama/posz.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/Yokohama/negz.jpg", 2048]
+            ];
+            break;
+        case "chapel":
+            image_files = [
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/LancellottiChapel/posx.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/LancellottiChapel/negx.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/LancellottiChapel/posy.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/LancellottiChapel/negy.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/LancellottiChapel/posz.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/LancellottiChapel/negz.jpg", 2048]
+            ];
+            break;
         case "museum":
             image_files = [
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/computer-history-museum/pos-x.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/computer-history-museum/neg-x.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/computer-history-museum/pos-y.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/computer-history-museum/neg-y.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/computer-history-museum/pos-z.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/computer-history-museum/neg-z.jpg"]
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/computer-history-museum/pos-x.jpg", 512],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/computer-history-museum/neg-x.jpg", 512],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/computer-history-museum/pos-y.jpg", 512],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/computer-history-museum/neg-y.jpg", 512],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/computer-history-museum/pos-z.jpg", 512],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/computer-history-museum/neg-z.jpg", 512]
             ];
             break;
         case "skybox":
             image_files = [
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/skybox/left.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/skybox/right.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/skybox/top.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/skybox/bottom.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/skybox/front.jpg"],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/skybox/back.jpg"]
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/skybox/right.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/skybox/left.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/skybox/top.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/skybox/bottom.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/skybox/front.jpg", 2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/skybox/back.jpg", 2048]
             ];
             break;
     }
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_POSITIVE_X ,0,state.gl.RGBA,
-        512, 512, 0, state.gl.RGBA,state.gl.UNSIGNED_BYTE, null);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X ,0,state.gl.RGBA,
-        512, 512, 0, state.gl.RGBA,state.gl.UNSIGNED_BYTE, null);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y ,0,state.gl.RGBA,
-        512, 512, 0, state.gl.RGBA,state.gl.UNSIGNED_BYTE, null);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y ,0,state.gl.RGBA,
-        512, 512, 0, state.gl.RGBA,state.gl.UNSIGNED_BYTE, null);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z ,0,state.gl.RGBA,
-        512, 512, 0, state.gl.RGBA,state.gl.UNSIGNED_BYTE, null);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z ,0,state.gl.RGBA,
-        512, 512, 0, state.gl.RGBA,state.gl.UNSIGNED_BYTE, null);
 
     image_files.forEach((img) =>
     {
+        state.gl.texImage2D(img[0], 0, state.gl.RGBA, img[2], img[2], 0, state.gl.RGBA, state.gl.UNSIGNED_BYTE, null);
         const cur_img = new Image();
         cur_img.src = img[1];
         cur_img.onload = () =>
@@ -82,47 +101,16 @@ function loadCubeImages(cube)
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function textureColors()
+function createBackgroundObject(d)
 {
-    let red     = new Uint8Array([255, 0, 0, 255]);
-    let green   = new Uint8Array([0, 255, 0, 255]);
-    let blue    = new Uint8Array([0, 0, 255, 255]);
-    let cyan    = new Uint8Array([0, 255, 255, 255]);
-    let magenta = new Uint8Array([255, 0, 255, 255]);
-    let yellow  = new Uint8Array([255, 255, 0, 255]);
-
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_POSITIVE_X ,0,state.gl.RGBA,
-        1,1,0,state.gl.RGBA,state.gl.UNSIGNED_BYTE, red);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X ,0,state.gl.RGBA,
-        1,1,0,state.gl.RGBA,state.gl.UNSIGNED_BYTE, green);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y ,0,state.gl.RGBA,
-        1,1,0,state.gl.RGBA,state.gl.UNSIGNED_BYTE, blue);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y ,0,state.gl.RGBA,
-        1,1,0,state.gl.RGBA,state.gl.UNSIGNED_BYTE, cyan);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z ,0,state.gl.RGBA,
-        1,1,0,state.gl.RGBA,state.gl.UNSIGNED_BYTE, yellow);
-    state.gl.texImage2D(state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z ,0,state.gl.RGBA,
-        1,1,0,state.gl.RGBA,state.gl.UNSIGNED_BYTE, magenta);
-}
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function initializeMirrors()
-{
-    initializeMirrors.quad = function(p1, p2, p3, p4, color)
+    createBackgroundObject.quad =  (p1, p2, p3, p4) =>
     {
-        let ind    = [p1, p3, p2, p1, p4, p3];
-        let normal = cross(subtract(vertices[p1], vertices[p2]), subtract(vertices[p3], vertices[p2]) );
+        let ind = [p1, p2, p3, p1, p3, p4];
 
         for (let i = 0; i < ind.length; ++i)
-        {
-            state.cubeMap.points.push(vertices[ind[i]]);
-            state.cubeMap.colors.push(color);
-            state.cubeMap.normals.push(normal);
-        }
+            state.cubeMap.skybox_vertices.push(ind[i]);
     };
 
-    let d = 0.5;
     let vertices = [
         vec3(-d, -d,  d),
         vec3(-d,  d,  d),
@@ -134,12 +122,64 @@ function initializeMirrors()
         vec3( d, -d, -d),
     ];
 
-    let color = vec4(0.5, 0.5, 0.5, 1.0);
+    createBackgroundObject.quad(vertices[3], vertices[0], vertices[4], vertices[7]);
+    createBackgroundObject.quad(vertices[4], vertices[5], vertices[6], vertices[7]);
+    createBackgroundObject.quad(vertices[6], vertices[5], vertices[1], vertices[2]);
+    createBackgroundObject.quad(vertices[1], vertices[0], vertices[3], vertices[2]);
+    createBackgroundObject.quad(vertices[2], vertices[3], vertices[7], vertices[6]);
+    createBackgroundObject.quad(vertices[5], vertices[4], vertices[0], vertices[1]);
+}
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function configureReflectingObject(whichOne)
+{
+    let obj = null;
+    if (whichOne == "Teapot")
+    {
+        obj = teapot(15);
+        state.cubeMap.texCords              = obj.TextureCoordinates;
 
-    initializeMirrors.quad(4, 5, 6, 7, color);
-    initializeMirrors.quad(3, 0, 4, 7, color);
-    initializeMirrors.quad(6, 5, 1, 2, color);
-    initializeMirrors.quad(1, 0, 3, 2, color);
-    initializeMirrors.quad(2, 3, 7, 6, color);
-    initializeMirrors.quad(5, 4, 0, 1, color);
+        obj.scale(0.5, 0.5, 0.5);
+        state.cubeMap.reflect_obj_vertices  = obj.TriangleVertices;
+
+        for (let i = 0; i < obj.Normals.length; ++i)
+            obj.Normals[i] = vec3(obj.Normals[i][0], obj.Normals[i][1], obj.Normals[i][2]);
+        state.cubeMap.normals               = obj.Normals;
+    }
+    else
+    {
+        switch(whichOne)
+        {
+            case "Cube":    obj = cube();       break;
+            case "Sphere":
+                obj = sphere(5);
+                break;
+            case "Cylinder":obj = cylinder(1500, 3  , true);   break;
+        }
+        state.cubeMap.reflect_obj_vertices  = obj.TriangleVertices;
+        state.cubeMap.normals               = obj.TriangleNormals;
+        state.cubeMap.texCords              = obj.TextureCoordinates;
+    }
+    initializeShaderAttributes_envMap();
+}
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function configureGloss()
+{
+    state.cubeMap.glossTexture = state.gl.createTexture();
+    state.gl.bindTexture(state.gl.TEXTURE_2D, state.cubeMap.glossTexture);
+
+    state.gl.texImage2D(state.gl.TEXTURE_2D, 0, state.gl.RGBA, 852, 480, 0, state.gl.RGBA, state.gl.UNSIGNED_BYTE, null);
+    const glossy_image = new Image();
+    glossy_image.src = "images/glossyTexture7.jpg";
+    glossy_image.onload = () =>
+        state.gl.texImage2D(state.gl.TEXTURE_2D, 0, state.gl.RGBA, state.gl.RGBA, state.gl.UNSIGNED_BYTE, glossy_image);
+
+    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_MAG_FILTER, state.gl.NEAREST);
+    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_MIN_FILTER, state.gl.NEAREST);
+
+    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_WRAP_T, state.gl.CLAMP_TO_EDGE);
+    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_WRAP_S, state.gl.CLAMP_TO_EDGE);
 }

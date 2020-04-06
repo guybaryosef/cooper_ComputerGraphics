@@ -5,10 +5,18 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>Final Project</title>
 
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+
+    <!-- from https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE -->
     <script type="text/javascript" src="../Common/webgl-utils.js"></script>
     <script type="text/javascript" src="../Common/initShaders.js"></script>
     <script type="text/javascript" src="../Common/MV.js"></script>
+    <script type="text/javascript" src="../Common/teapotData.js"></script>
+    <script type="text/javascript" src="../Common/sphereData.js"></script>
+    <script type="text/javascript" src="../Common/cylinderData.js"></script>
+    <script type="text/javascript" src="../Common/cubeData.js"></script>
 
+    <!-- my code -->
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/globals.js"></script>
     <script type="text/javascript" src="js/initializeObjects.js"></script>
@@ -20,12 +28,41 @@
 <canvas id="gl-canvas" height="512px" width="512px" >
     Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
+<div id="Interactive">
 
-<div id="interactive">
-    Background Image
-    <button id="museum_background">Museum</button>
-    <button id="colors_background">Solid Colors</button>
-    <button id="skybox_background">Skybox</button>
+    <div id="Instructions">
+        Instructions:
+        <p>Use the arrow keys to spin around the reflecting object.</p>
+        <p>Pick whichever background image and reflecting object you like.</p>
+    </div>
+    <br>
+    <div id="Background-Image">
+        Background Image:
+        <button id="museum_background">Museum</button>
+        <button id="skybox_background">Skybox</button>
+        <button id="bridge_background">Golden Gate Bridge</button>
+        <button id="yoko_background">Yokohama</button>
+        <button id="chapel_background">Lancellotti Chapel</button>
+    </div>
+    <br>
+    <div id="Reflecting-Object">
+        Reflecting Object:
+        <button id="cube_reflect">Cube</button>
+        <button id="sphere_reflect">Sphere</button>
+        <button id="cylinder_reflect">Cylinder</button>
+        <button id="teapot_reflect">Teapot</button>
+    </div>
+    <br>
+    <div id="Rotate-Reflecting-Object">
+        X-Axis: Negative <input id="x-axis-slider" type="range"
+                       min="-1.4" max="1.4" step="0.14" value="0" />Positive
+        <br>
+        Y-Axis: Negative <input id="y-axis-slider" type="range"
+                       min="-1.4" max="1.4" step="0.14" value="0" />Positive
+        <br>
+        Z-Axis: Negative <input id="z-axis-slider" type="range"
+                       min="-1.4" max="1.4" step="0.14" value="0" />Positive
+    </div>
 </div>
 
 </body>

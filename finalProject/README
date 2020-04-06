@@ -14,14 +14,14 @@ Done:
 
 6.5 Make buttons to control the cube map pictures.
 
-TODO:
-
 7. Make cubeMap appear as texture of the outer cube- what is known as a 'skybox'.
 
-8. Make the inside cube a different color (glass-y / see through).
+8. Add different shapes to be reflectors.
 
-9. Add different shapes to be reflectors.
+9. Make the inside cube a different color (glass-y / see through).
 
-10. Add shapes flying through the air.
+10. Add options to have the reflecting object rotate.
 
-11. Add a light source.
+TODO:
+
+11. Add shapes flying through the air.
