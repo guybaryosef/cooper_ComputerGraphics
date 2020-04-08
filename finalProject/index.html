@@ -19,7 +19,9 @@
     <!-- my code -->
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/globals.js"></script>
-    <script type="text/javascript" src="js/initializeObjects.js"></script>
+    <script type="text/javascript" src="js/skyboxCubeMap.js"></script>
+    <script type="text/javascript" src="js/reflectingCubeMap.js"></script>
+    <script type="text/javascript" src="js/spinningObjects.js"></script>
 
 </head>
 
@@ -63,8 +65,13 @@
         Z-Axis: Negative <input id="z-axis-slider" type="range"
                        min="-1.4" max="1.4" step="0.14" value="0" />Positive
     </div>
+    <br>
+    <div id="Get-Spinning-Object-Counts">
+        Number of Spinning Objects: 0 <input id="spinning-objects-count" type="range"
+                                min="0" max="6" step="1" value="3" />6
+        <button id="spin-objects">Spin Objects</button>
+    </div>
 </div>
-
 </body>
 
 </html>

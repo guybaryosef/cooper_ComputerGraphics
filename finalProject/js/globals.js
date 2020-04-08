@@ -2,6 +2,7 @@ var state = {
     gl: null,
     program_skybox: null,
     program_envMap: null,
+    program_spinObj: null,
 
     ui: {
         dragging: false,
@@ -13,7 +14,21 @@ var state = {
         inRotation: false,
         rotationQueue: [],
     },
+    spinningObjects: {
+        count: 3,
+        vertices: [],
+        start_idx: [],
+        length: [],
+
+        parameters:   [],   // radius, theta, rotx, roty.
+        parametersLoc: null,
+
+        spinning: false,
+    },
     cubeMap: {
+        modelViewMatrix: null,
+        projectionMatrix: null,
+
         reflect_obj_vertices: [],
         skybox_vertices: [],
         normals: [],
@@ -22,29 +37,41 @@ var state = {
         vNormal_attr:      null,
         vPosition_attr_em: null,
         vPosition_attr_sb: null,
+        vPosition_attr_so: null,
 
         nBuffer:    null,
         vBuffer_em: null,
         vBuffer_sb: null,
+        vBuffer_so: null,
 
-        textureObj:     null,
-        textureSampler: null,
+        skyboxTexture:  null,
+        skyboxTexSampler: null,
 
         glossTextureLoc_em:      null,
         backgroundTextureLoc_em: null,
         objRotTexCordsLoc_em:    null,
         backgroundTextureLoc_sb: null,
+
+        reflectorCubeMapFramebuffer: null,
+        reflectorCubemapFramebuffers_belongings: [],
+        reflectorTexture:  null,
+        reflectorTexSampler: null,
+
     },
     view: {
         modelViewMatrixLoc_em:  null,
         projectionMatrixLoc_em: null,
         cameraPositionLoc_em:   null,
         objRotAngleLoc_em:      null,
+
         skyboxViewMatLoc_sb:    null,
 
+        modelViewMatrixLoc_so:  null,
+        projectionMatrixLoc_so: null,
+
         aspect: null,
-        near: 1,
-        far:  10,
+        near: 0.1,
+        far:  100,
         fovy: 60,           // in degrees
 
         phi: 0,

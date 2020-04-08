@@ -1,9 +1,9 @@
 
 
-function configureCubeMap(which_one)
+function configureSkyboxCubeMap(which_one)
 {
-    state.cubeMap.textureObj = state.gl.createTexture();
-    state.gl.bindTexture(state.gl.TEXTURE_CUBE_MAP, state.cubeMap.textureObj);
+    state.cubeMap.skyboxTexture = state.gl.createTexture();
+    state.gl.bindTexture(state.gl.TEXTURE_CUBE_MAP, state.cubeMap.skyboxTexture);
 
     switch(which_one)
     {
@@ -78,12 +78,12 @@ function loadCubeImages(cube)
             break;
         case "skybox":
             image_files = [
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/skybox/right.jpg", 2048],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/skybox/left.jpg", 2048],
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/skybox/top.jpg", 2048],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/skybox/bottom.jpg", 2048],
-                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/skybox/front.jpg", 2048],
-                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/skybox/back.jpg", 2048]
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_X, "images/skybox/right.jpg",   2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_X, "images/skybox/left.jpg",    2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Y, "images/skybox/top.jpg",     2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, "images/skybox/bottom.jpg",  2048],
+                [state.gl.TEXTURE_CUBE_MAP_POSITIVE_Z, "images/skybox/front.jpg",   2048],
+                [state.gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, "images/skybox/back.jpg",    2048]
             ];
             break;
     }
@@ -94,7 +94,10 @@ function loadCubeImages(cube)
         const cur_img = new Image();
         cur_img.src = img[1];
         cur_img.onload = () =>
+        {
+            state.gl.bindTexture(state.gl.TEXTURE_CUBE_MAP, state.cubeMap.skyboxTexture);
             state.gl.texImage2D(img[0], 0, state.gl.RGBA, state.gl.RGBA, state.gl.UNSIGNED_BYTE, cur_img);
+        }
     });
 
 }
@@ -129,57 +132,14 @@ function createBackgroundObject(d)
     createBackgroundObject.quad(vertices[2], vertices[3], vertices[7], vertices[6]);
     createBackgroundObject.quad(vertices[5], vertices[4], vertices[0], vertices[1]);
 }
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function configureReflectingObject(whichOne)
+function initializeShaderAttributes_skybox()
 {
-    let obj = null;
-    if (whichOne == "Teapot")
-    {
-        obj = teapot(15);
-        state.cubeMap.texCords              = obj.TextureCoordinates;
+    state.cubeMap.vBuffer_sb = state.gl.createBuffer();
+    state.gl.bindBuffer(state.gl.ARRAY_BUFFER, state.cubeMap.vBuffer_sb);
+    state.gl.bufferData(state.gl.ARRAY_BUFFER, flatten(state.cubeMap.skybox_vertices), state.gl.STATIC_DRAW);
 
-        obj.scale(0.5, 0.5, 0.5);
-        state.cubeMap.reflect_obj_vertices  = obj.TriangleVertices;
-
-        for (let i = 0; i < obj.Normals.length; ++i)
-            obj.Normals[i] = vec3(obj.Normals[i][0], obj.Normals[i][1], obj.Normals[i][2]);
-        state.cubeMap.normals               = obj.Normals;
-    }
-    else
-    {
-        switch(whichOne)
-        {
-            case "Cube":    obj = cube();       break;
-            case "Sphere":
-                obj = sphere(5);
-                break;
-            case "Cylinder":obj = cylinder(1500, 3  , true);   break;
-        }
-        state.cubeMap.reflect_obj_vertices  = obj.TriangleVertices;
-        state.cubeMap.normals               = obj.TriangleNormals;
-        state.cubeMap.texCords              = obj.TextureCoordinates;
-    }
-    initializeShaderAttributes_envMap();
-}
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function configureGloss()
-{
-    state.cubeMap.glossTexture = state.gl.createTexture();
-    state.gl.bindTexture(state.gl.TEXTURE_2D, state.cubeMap.glossTexture);
-
-    state.gl.texImage2D(state.gl.TEXTURE_2D, 0, state.gl.RGBA, 852, 480, 0, state.gl.RGBA, state.gl.UNSIGNED_BYTE, null);
-    const glossy_image = new Image();
-    glossy_image.src = "images/glossyTexture7.jpg";
-    glossy_image.onload = () =>
-        state.gl.texImage2D(state.gl.TEXTURE_2D, 0, state.gl.RGBA, state.gl.RGBA, state.gl.UNSIGNED_BYTE, glossy_image);
-
-    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_MAG_FILTER, state.gl.NEAREST);
-    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_MIN_FILTER, state.gl.NEAREST);
-
-    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_WRAP_T, state.gl.CLAMP_TO_EDGE);
-    state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_WRAP_S, state.gl.CLAMP_TO_EDGE);
+    state.cubeMap.vPosition_attr_sb = state.gl.getAttribLocation(state.program_skybox, "vPosition");
 }
