@@ -12,7 +12,6 @@ var state = {
         },
 
         inRotation: false,
-        rotationQueue: [],
     },
     spinningObjects: {
         count: 3,
@@ -20,7 +19,7 @@ var state = {
         start_idx: [],
         length: [],
 
-        parameters:   [],   // radius, theta, rotx, roty.
+        parameters:   [],
         parametersLoc: null,
 
         spinning: false,

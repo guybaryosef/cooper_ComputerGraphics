@@ -11,7 +11,7 @@ function configureSpinningObjects(num)
     let theta = 0;
 
     let scale_vec = vec4(0.5, 0.5, 0.5, 1.0);
-    for (let i = 0; i < num; ++i)
+    for (let i = 0; i < num; ++i, theta += theta_inc)
     {
         //get a random number to decide the shape type
         let shape = Math.floor(Math.random() * 5);
@@ -24,11 +24,11 @@ function configureSpinningObjects(num)
             default:cur_obj = sphere(3);     break;
         }
 
-        // get a random number to decide the radius and rotation speeds
+        // generate the random parameters of the spinning object
         let radius     = 4*Math.random() + 3;
         let phi        = Math.random()*Math.PI - Math.PI/2;
-        let phi_incr   = Math.random()/150 + 0.005;
-        let theta_incr = Math.random()/150 + 0.005;
+        let phi_incr   = Math.random()/200 + 0.005;
+        let theta_incr = Math.random()/200 + 0.005;
         let x_incr     = Math.random();
         let y_incr     = Math.random();
 
@@ -39,11 +39,9 @@ function configureSpinningObjects(num)
         state.spinningObjects.parameters.push( mat3(radius, theta,  theta_incr,
                                                     0,      x_incr, phi,
                                                     0,      y_incr, phi_incr) );
-
-        theta += theta_inc;
     }
 
-    initializeShaderAttributes_spinningObjs()
+    initializeShaderAttributes_spinningObjs();
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

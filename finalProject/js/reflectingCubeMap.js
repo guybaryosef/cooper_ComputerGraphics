@@ -2,7 +2,7 @@
 function configureReflectingObject(whichOne)
 {
     let obj = null;
-    if (whichOne == "Teapot")
+    if (whichOne === "Teapot")
     {
         obj = teapot(15);
         state.cubeMap.texCords              = obj.TextureCoordinates;
@@ -18,16 +18,15 @@ function configureReflectingObject(whichOne)
     {
         switch(whichOne)
         {
-            case "Cube":    obj = cube();       break;
-            case "Sphere":
-                obj = sphere(5);
-                break;
+            case "Cube":    obj = cube();                                               break;
+            case "Sphere":  obj = sphere(5);                              break;
             case "Cylinder":obj = cylinder(1500, 3  , true);   break;
         }
         state.cubeMap.reflect_obj_vertices  = obj.TriangleVertices;
         state.cubeMap.normals               = obj.TriangleNormals;
         state.cubeMap.texCords              = obj.TextureCoordinates;
     }
+
     initializeShaderAttributes_envMap();
 }
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +41,7 @@ function configureGloss()
     const glossy_image = new Image();
     glossy_image.src = "images/glossyTexture.jpg";
     glossy_image.onload = () =>
-        state.gl.texImage2D(state.gl.TEXTURE_2D, 0, state.gl.RGBA, state.gl.RGBA, state.gl.UNSIGNED_BYTE, glossy_image);
+            state.gl.texImage2D(state.gl.TEXTURE_2D, 0, state.gl.RGBA, state.gl.RGBA, state.gl.UNSIGNED_BYTE, glossy_image);
 
     state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_MAG_FILTER, state.gl.NEAREST);
     state.gl.texParameteri(state.gl.TEXTURE_2D, state.gl.TEXTURE_MIN_FILTER, state.gl.NEAREST);
@@ -73,13 +72,14 @@ function configureReflectingCubeMap()
     state.gl.bindFramebuffer(state.gl.FRAMEBUFFER, state.cubeMap.reflectorCubeMapFramebuffer);
 
     // create a depth renderbuffer
-    const depthBuffer = state.gl.createRenderbuffer();
+    let depthBuffer = state.gl.createRenderbuffer();
     state.gl.bindRenderbuffer(state.gl.RENDERBUFFER, depthBuffer);
 
-    // make the depth buffer the same size as the targetTexture and attach it to the framebuffer
+    // make the depth buffer the same size as the targetTexture & canvas and attach it to the framebuffer
     state.gl.renderbufferStorage(state.gl.RENDERBUFFER, state.gl.DEPTH_COMPONENT16, state.gl.canvas.width, state.gl.canvas.height);
     state.gl.framebufferRenderbuffer(state.gl.FRAMEBUFFER, state.gl.DEPTH_ATTACHMENT, state.gl.RENDERBUFFER, depthBuffer);
 
+    // framebuffer will be a cube map texture w/ model view matrices that correspond with each of the 6 axis directions
     state.cubeMap.reflectorCubemapFramebuffers_belongings = [
         {
             face: state.gl.TEXTURE_CUBE_MAP_POSITIVE_X,

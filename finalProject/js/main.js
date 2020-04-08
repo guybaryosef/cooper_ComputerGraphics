@@ -1,6 +1,4 @@
 
-
-
 window.onload = function init()
 {
     state.gl = WebGLUtils.setupWebGL( document.getElementById("gl-canvas") );
@@ -60,15 +58,9 @@ function listenToEvents()
         state.ui.mouse.lastY = event.clientY;
     };
 
-    document.getElementById("gl-canvas").onmouseup = (event) =>
-    {
-        state.ui.dragging = false;
-    };
+    document.getElementById("gl-canvas").onmouseup = (event)    => state.ui.dragging = false;
 
-    document.getElementById("gl-canvas").onmouseleave = (event) =>
-    {
-        state.ui.dragging = false;
-    };
+    document.getElementById("gl-canvas").onmouseleave = (event) => state.ui.dragging = false;
 
     document.getElementById("gl-canvas").onmousemove = (event) =>
     {
@@ -99,7 +91,6 @@ function listenToEvents()
 
     /////// ARROW KEYS ///////
     listenToEvents.arrows = { left: 37, up: 38, right: 39, down: 40 };
-
     window.onkeydown = function(event)
     {
         switch(event.keyCode)
@@ -121,27 +112,15 @@ function listenToEvents()
         }
     };
 
-    /////// BUTTONS AND SLIDERS ///////
-    document.getElementById("x-axis-slider").onchange = function(event) {
-        state.view.rotAnglesIncrement[0] = parseFloat(event.target.value);
-    };
-
-    document.getElementById("y-axis-slider").onchange = function(event) {
-        state.view.rotAnglesIncrement[1] = parseFloat(event.target.value);
-    };
-
-    document.getElementById("z-axis-slider").onchange = function(event) {
-        state.view.rotAnglesIncrement[2] = parseFloat(event.target.value);
-    };
-
-    document.getElementById("spinning-objects-count").onchange = function(event) {
-        configureSpinningObjects(parseInt(event.target.value));
-    };
-
+    ///////// BUTTONS AND SLIDERS /////////
+    document.getElementById("x-axis-slider").onchange = (event) => state.view.rotAnglesIncrement[0] = parseFloat(event.target.value);
+    document.getElementById("y-axis-slider").onchange = (event) => state.view.rotAnglesIncrement[1] = parseFloat(event.target.value);
+    document.getElementById("z-axis-slider").onchange = (event) => state.view.rotAnglesIncrement[2] = parseFloat(event.target.value);
+    document.getElementById("spinning-objects-count").onchange = (event) => configureSpinningObjects(parseInt(event.target.value));
     document.getElementById("spin-objects").onclick=function(e) {
         state.spinningObjects.spinning = !state.spinningObjects.spinning;
         this.style.borderStyle = (this.style.borderStyle!=='inset' ? 'inset' : 'outset');
-    }
+    };
 
     document.getElementById("museum_background").onclick = () => configureSkyboxCubeMap("Museum");
     document.getElementById("skybox_background").onclick = () => configureSkyboxCubeMap("Skybox");
@@ -159,35 +138,34 @@ function listenToEvents()
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function render()
 {
-    ////// CANVAS //////
+    /////////// CANVAS ///////////
     state.gl.bindFramebuffer(state.gl.FRAMEBUFFER, null);
     state.gl.viewport(0, 0, state.gl.canvas.width, state.gl.canvas.height);
     state.gl.clear(state.gl.COLOR_BUFFER_BIT | state.gl.DEPTH_BUFFER_BIT);
     state.view.aspect = state.gl.canvas.width/state.gl.canvas.height;
 
-    // set up the uniforms passed to shaders
+    // update the point-of-view (canvas)'s model view matrix and projection matrix
     state.view.eye = vec3(  state.view.radius*Math.cos(state.view.phi)*Math.sin(state.view.theta),
                             state.view.radius*Math.sin(state.view.phi),
                             state.view.radius*Math.cos(state.view.phi)*Math.cos(state.view.theta));
     state.cubeMap.modelViewMatrix  = lookAt(state.view.eye, state.view.at, state.view.up);
     state.cubeMap.projectionMatrix = perspective(state.view.fovy, state.view.aspect, state.view.near, state.view.far);
 
-    // increment the rotation angles
-    state.view.rotAngles = add(state.view.rotAngles, state.view.rotAnglesIncrement);
-    spinObjects();  // update the spinning objects
+    state.view.rotAngles = add(state.view.rotAngles, state.view.rotAnglesIncrement);    // increment the rotation angles
+    spinObjects();                                                                      // update the spinning objects
 
-    ////// DRAW SKYBOX IMAGE ///////////
+    /////////// DRAW SKYBOX IMAGE ///////////
     // instead of bringing from object coordinates to eye coordinates, bring eye to object.
     drawSkybox( inverse4(mult(state.cubeMap.projectionMatrix, state.cubeMap.modelViewMatrix)) );
 
-    ////// DRAW ENVIRONMENT MAP ////////
+    /////////// DRAW ENVIRONMENT MAP ///////////
     drawReflector();
 
-    ////// DRAW SPINNING OBJECTS ///////
+    /////////// DRAW SPINNING OBJECTS ///////////
     for (let i = 0; i < state.spinningObjects.count; ++i)
         drawSpinningObjects(i, state.cubeMap.modelViewMatrix, state.cubeMap.projectionMatrix);
 
-    ////// UPDATE THE FRAMEBUFFER //////
+    /////////// UPDATE THE FRAMEBUFFER ///////////
     updateFrameBuffer();
 
     // updates screen at next possible moment, then exits current render() and execute specified fnc (render) again.
@@ -201,25 +179,21 @@ function updateFrameBuffer()
     state.gl.bindFramebuffer(state.gl.FRAMEBUFFER, state.cubeMap.reflectorCubeMapFramebuffer);
     state.gl.viewport(0, 0, state.gl.canvas.width, state.gl.canvas.height);
 
+    // create a framebuffer out of the view seen from the origin, looking out at each axis direction, with 90 degrees
+    // field of view. for each framebuffer-cube-map-side will render the skybox cubemap as well as the spinning objects.
     let projectionMatrix = perspective(90, state.view.aspect, state.view.near, state.view.far);
 
     state.cubeMap.reflectorCubemapFramebuffers_belongings.forEach((obj) =>
         {
             state.gl.framebufferTexture2D(state.gl.FRAMEBUFFER, state.gl.COLOR_ATTACHMENT0, obj.face, state.cubeMap.reflectorTexture, 0);
-            drawToReflectorCubeMap(obj.modelViewMat, projectionMatrix);
+            state.gl.clear(state.gl.COLOR_BUFFER_BIT | state.gl.DEPTH_BUFFER_BIT);
+
+            drawSkybox( inverse4(mult(projectionMatrix, obj.modelViewMat)) );
+
+            for (let i = 0; i < state.spinningObjects.count; ++i)
+                drawSpinningObjects(i, obj.modelViewMat, projectionMatrix);
         }
     );
-}
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function drawToReflectorCubeMap(modelViewMatrix, projectionMatrix)
-{
-    state.gl.clear(state.gl.COLOR_BUFFER_BIT | state.gl.DEPTH_BUFFER_BIT);
-
-    drawSkybox( inverse4(mult(projectionMatrix, modelViewMatrix)) );
-    for (let i = 0; i < state.spinningObjects.count; ++i)
-        drawSpinningObjects(i, modelViewMatrix, projectionMatrix);
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -228,15 +202,19 @@ function drawSkybox(matrix)
 {
     state.gl.useProgram(state.program_skybox);
 
+    // link attributes
     state.gl.bindBuffer(state.gl.ARRAY_BUFFER, state.cubeMap.vBuffer_sb);
     state.gl.vertexAttribPointer(state.cubeMap.vPosition_attr_sb, 3, state.gl.FLOAT, false, 0, 0);
     state.gl.enableVertexAttribArray(state.cubeMap.vPosition_attr_sb);
 
+    // link textures
     state.gl.activeTexture(state.gl.TEXTURE0);
     state.gl.bindTexture(state.gl.TEXTURE_CUBE_MAP, state.cubeMap.skyboxTexture);
     state.gl.uniform1i(state.cubeMap.backgroundTextureLoc_sb, 0);
 
+    // update uniforms
     state.gl.uniformMatrix4fv( state.view.skyboxViewMatLoc_sb, false, flatten(matrix) );
+
     state.gl.drawArrays(state.gl.TRIANGLES, 0, state.cubeMap.skybox_vertices.length);
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,9 +250,9 @@ function drawReflector()
     state.gl.uniform3fv( state.view.cameraPositionLoc_em, flatten(state.view.eye) );
     state.gl.uniform3fv( state.view.objRotAngleLoc_em, flatten(state.view.rotAngles) );
     state.gl.uniform2fv( state.cubeMap.objRotTexCordsLoc_em, flatten(state.cubeMap.texCords) );
-
     state.gl.uniformMatrix4fv( state.view.modelViewMatrixLoc_em, false, flatten(state.cubeMap.modelViewMatrix) );
     state.gl.uniformMatrix4fv( state.view.projectionMatrixLoc_em, false, flatten(state.cubeMap.projectionMatrix) );
+
     state.gl.drawArrays(state.gl.TRIANGLES, 0, state.cubeMap.reflect_obj_vertices.length);
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

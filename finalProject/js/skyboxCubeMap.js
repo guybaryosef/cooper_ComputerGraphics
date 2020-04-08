@@ -7,12 +7,11 @@ function configureSkyboxCubeMap(which_one)
 
     switch(which_one)
     {
-        case "Museum":  loadCubeImages("museum"); break;
-        case "Skybox":  loadCubeImages("skybox"); break;
-        case "Bridge":  loadCubeImages("bridge"); break;
-        case "Yoko":  loadCubeImages("yokohama"); break;
-        case "Chapel":  loadCubeImages("chapel"); break;
-
+        case "Museum":  loadCubeImages("museum");   break;
+        case "Skybox":  loadCubeImages("skybox");   break;
+        case "Bridge":  loadCubeImages("bridge");   break;
+        case "Yoko":    loadCubeImages("yokohama"); break;
+        case "Chapel":  loadCubeImages("chapel");   break;
     }
 
     state.gl.texParameteri(state.gl.TEXTURE_CUBE_MAP, state.gl.TEXTURE_MAG_FILTER, state.gl.NEAREST);
