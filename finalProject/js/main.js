@@ -52,6 +52,52 @@ window.onload = function init()
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function listenToEvents()
 {
+    /////// MOUSE DRAGS ///////
+    document.getElementById("gl-canvas").onmousedown = (event) =>
+    {
+        state.ui.dragging = true;
+        state.ui.mouse.lastX = event.clientX;
+        state.ui.mouse.lastY = event.clientY;
+    };
+
+    document.getElementById("gl-canvas").onmouseup = (event) =>
+    {
+        state.ui.dragging = false;
+    };
+
+    document.getElementById("gl-canvas").onmouseleave = (event) =>
+    {
+        state.ui.dragging = false;
+    };
+
+    document.getElementById("gl-canvas").onmousemove = (event) =>
+    {
+        if (state.ui.dragging)
+        {
+            let x = event.clientX;
+            let y = event.clientY;
+
+            let x_factor = (Math.abs(state.view.theta[0]) % 360 > 180) ? 0.5 : -0.5;
+            let dx = x_factor*(x - state.ui.mouse.lastX);
+            let dy = -0.5*(y - state.ui.mouse.lastY);
+
+            state.view.theta += dx/100;
+            state.view.phi   -= dy/100;
+            state.view.phi = Math.min(Math.PI/2, Math.max(state.view.phi, -Math.PI/2));
+
+            state.ui.mouse.lastX = x;
+            state.ui.mouse.lastY = y;
+        }
+    };
+
+    document.getElementById("gl-canvas").onwheel = function(event)
+    {
+        state.view.radius += event.deltaY*0.01;
+        state.view.radius = Math.min(10.0, Math.max(state.view.radius, 2.0));
+        state.view.eye = vec3(0, 0, state.view.radius);
+    };
+
+    /////// ARROW KEYS ///////
     listenToEvents.arrows = { left: 37, up: 38, right: 39, down: 40 };
 
     window.onkeydown = function(event)
@@ -75,13 +121,7 @@ function listenToEvents()
         }
     };
 
-    document.getElementById("gl-canvas").onwheel = function(event)
-    {
-        state.view.radius += event.deltaY*0.01;
-        state.view.radius = Math.min(10.0, Math.max(state.view.radius, 2.0));
-        state.view.eye = vec3(0, 0, state.view.radius);
-    };
-
+    /////// BUTTONS AND SLIDERS ///////
     document.getElementById("x-axis-slider").onchange = function(event) {
         state.view.rotAnglesIncrement[0] = parseFloat(event.target.value);
     };
