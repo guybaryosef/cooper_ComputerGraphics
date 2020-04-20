@@ -1,0 +1,22 @@
+## Done:
+
+0. Create the boilerplate needed to get start with the project.
+
+## TODO:
+
+1. Create a cube to render - make it the whole canvas so that we can call the fragment shader on the whole canvas.
+
+2. Create user interaction -> uniforms pipeline to pass object specifications. Also, decide on the accepted objects.
+
+3. Design ray tracer algorithm in the fragment shader that will reflect and refract throughout the image. This will incorporate:
+3-1. Some depth logic to find out the closest, ie first, object a ray will hit for every fragment (a fragment will be, for our purposes, a pixel).
+3-2. Intersection algorithm for the possible objects that takes into account reflections and refractions.
+3-3. How to handle lighting and shadows? Maybe this should be just part of part (4).
+
+4. Add a light source and incorporate it into the ray — will also require research into what lighting/shading  algorithm to use.
+
+5. Create a skybox, or maybe just a textured side, so that the background scene can be seen due to the reflections and refractions (so that it won't be just objects off of one another).
+
+6. Experiment if the computer can render this in real time, in which we can have the objects/camera move. Otherwise use should have control over when to re-render.
+
+7. Depending of (6), decide what to do with the view.
