@@ -14,8 +14,20 @@ var state = {
     uniforms: {
         mvmLoc:           null,
         projLoc:          null,
+
         modelViewMatrix:  null,
         projectionMatrix: null,
+
+        sphereValues: [0,1,2,3,4,5,6,7,8],
+        sphereCount: 1,
+        sphereCenters: [vec3(-0.5, -0.5, -0.5), vec3(-0.5, -0.5, 0.0), vec3(-0.5, -0.5, 0.5),
+                        vec3( 0.0,  0.0, -0.5), vec3( 0.0,  0.0, 0.0), vec3( 0.0,  0.0, 0.5),
+                        vec3( 0.5,  0.5, -0.5), vec3( 0.5,  0.5, 0.0), vec3( 0.5,  0.5, 0.5)    ],
+        sphereRadii: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
+        sphereRadiiLoc:   null,
+        sphereCentersLoc: null,
+        sphereValsLoc:    null,
+        sphereCountLoc:   null,
     },
 
     renders: {
