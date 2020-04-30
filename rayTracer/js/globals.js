@@ -19,7 +19,7 @@ var state = {
         projectionMatrix: null,
 
         sphereValues: [0,1,2,3,4,5,6,7,8],
-        sphereCount: 1,
+        sphereCount: 3,
         sphereCenters: [vec3(-0.5, -0.5, -0.5), vec3(-0.5, -0.5, 0.0), vec3(-0.5, -0.5, 0.5),
                         vec3( 0.0,  0.0, -0.5), vec3( 0.0,  0.0, 0.0), vec3( 0.0,  0.0, 0.5),
                         vec3( 0.5,  0.5, -0.5), vec3( 0.5,  0.5, 0.0), vec3( 0.5,  0.5, 0.5)    ],

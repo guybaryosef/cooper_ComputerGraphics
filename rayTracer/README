@@ -4,14 +4,12 @@
 
 1. Create a cube to render - make it the whole canvas so that we can call the fragment shader on the whole canvas.
 
-2. Create: user interaction -> uniforms pipeline to pass object specifications.
+2. Create: javascriptSpecifications -> uniforms pipeline to pass object specifications.
 
 ## TODO:
 
-2.5 Decide on the accepted objects.
-
 3. Design ray tracer algorithm in the fragment shader that will reflect and refract throughout the image. This will incorporate:
-3-1. Some depth logic to find out the closest, ie first, object a ray will hit for every fragment (a fragment will be, for our purposes, a pixel).
+3-1. Some depth logic to find out the closest, ie first, object a ray will hit for every fragment (a fragment is, for our purposes, a pixel).
 3-2. Intersection algorithm for the possible objects that takes into account reflections and refractions.
 3-3. How to handle lighting and shadows? Maybe this should be just part of part (4).
 
