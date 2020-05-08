@@ -12,22 +12,29 @@ var state = {
     },
 
     uniforms: {
-        mvmLoc:           null,
-        projLoc:          null,
+        eyeLoc:             null,
+        basisVecsLoc:       null,
+        basisVecs:          [vec3(), vec3()],
 
-        modelViewMatrix:  null,
-        projectionMatrix: null,
-
-        sphereValues: [0,1,2,3,4,5,6,7,8],
-        sphereCount: 3,
-        sphereCenters: [vec3(-0.5, -0.5, -0.5), vec3(-0.5, -0.5, 0.0), vec3(-0.5, -0.5, 0.5),
+        spheres: {
+            Count:   4,
+            reflectionCount: 3,
+            Centers:[   vec3(-0.5, -0.5, -0.5), vec3(-0.5, -0.5, 0.0), vec3(-0.5, -0.5, 0.5),
                         vec3( 0.0,  0.0, -0.5), vec3( 0.0,  0.0, 0.0), vec3( 0.0,  0.0, 0.5),
                         vec3( 0.5,  0.5, -0.5), vec3( 0.5,  0.5, 0.0), vec3( 0.5,  0.5, 0.5)    ],
-        sphereRadii: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
-        sphereRadiiLoc:   null,
-        sphereCentersLoc: null,
-        sphereValsLoc:    null,
-        sphereCountLoc:   null,
+            Radii:  [ 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
+            colors: [   vec4(0.0, 1.0, 0.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0),
+                        vec4(0.0, 0.0, 1.0, 1.0), vec4(0.0, 0.0, 1.0, 1.0), vec4(0.0, 0.0, 1.0, 1.0),
+                        vec4(1.0, 0.0, 0.0, 1.0), vec4(1.0, 0.0, 0.0, 1.0), vec4(1.0, 0.0, 0.0, 1.0) ],
+            reflectivity: [ 0.3, 0.3, 0.3,  0.1, 0.1, 0.1,  0.7, 0.7, 0.7],
+
+            reflectivityLoc:    null,
+            RadiiLoc:           null,
+            CentersLoc:         null,
+            CountLoc:           null,
+            colorsLoc:          null,
+            reflectionCountLoc: null,
+        }
     },
 
     renders: {

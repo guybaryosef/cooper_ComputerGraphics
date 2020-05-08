@@ -11,14 +11,10 @@ function createBackgroundObject(d)
     };
 
     let vertices = [
-        vec3(-d, -d,  d),
-        vec3(-d,  d,  d),
-        vec3( d,  d,  d),
-        vec3( d, -d,  d),
-        vec3(-d, -d, -d),
-        vec3(-d,  d, -d),
-        vec3( d,  d, -d),
-        vec3( d, -d, -d),
+        vec3(-d, -d,  d),   // left bottom
+        vec3(-d,  d,  d),   // left top
+        vec3( d,  d,  d),   // right top
+        vec3( d, -d,  d)    // right bottom
     ];
 
 
