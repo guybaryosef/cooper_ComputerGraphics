@@ -18,7 +18,7 @@ uniform int     reflectionCount;
 #define SPHERE_OBJECT   1
 #define CUBE_OBJECT     2
 #define NO_INTERSECTION -100.0
-
+#define PI              3.1415926538
 
 struct Ray
 {
@@ -40,10 +40,13 @@ vec3    getSphereIntersection(Ray ray, vec3 center, float radius);
 
 void main()
 {
-        float r = sqrt(curPos.x*curPos.x + curPos.y*curPos.y);
-        float t = acos( dot(normalize(curPos.xy), vec2(0.0, 1.0)) );
-        if (curPos.x < 0.0)
+        float r = sqrt( dot(curPos.xy, curPos.xy) );
+        float t = acos( dot(curPos.xy, vec2(0.0, 1.0))/r );
+        if (curPos.x > 0.0001)
                 t = -t;
+
+        if (eyeVec.z < 0.0001)
+                r = -r;
 
         vec3 real_pos = eyeVec + r * (cos(t) * BasisVecs[0] + sin(t) * BasisVecs[1]);
         vec3 real_dir = normalize( -eyeVec );
@@ -68,6 +71,7 @@ void main()
                 else
                         break;
         }
+
         overallColor.w = 1.0;
         gl_FragColor = found ? overallColor : vec4(1.0, 1.0, 1.0, 1.0);
 }
@@ -76,7 +80,7 @@ void main()
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ivec2 closestIntersectionObject(Ray ray)
 {
-        ivec2 ret          = ivec2(-1, -1);
+        ivec2 ret          = ivec2(-1, -1);     // vec2(OBJECT_TYPE, index)
         float minDistance = MAX_DISTANCE-1.0;
 
         // run through sphere objects
@@ -93,8 +97,6 @@ ivec2 closestIntersectionObject(Ray ray)
                 }
         }
 
-        // run through other object shapes..
-
         return ret;
 }
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +105,7 @@ ivec2 closestIntersectionObject(Ray ray)
 float doesSphereIntersect(Ray ray, vec3 center, float radius)
 {
         vec3 poi = getSphereIntersection(ray, center, radius);
-        if (poi.x-1.0 < NO_INTERSECTION)        // -1 used bc of floating point imprecision
+        if (poi.x-1.0 < NO_INTERSECTION)        // -1.0 used bc of floating point imprecision
                 return MAX_DISTANCE;
         else
                 return distance(ray.origin, poi);
@@ -113,10 +115,11 @@ float doesSphereIntersect(Ray ray, vec3 center, float radius)
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 vec3 getSphereIntersection(Ray ray, vec3 center, float radius)
 {
-        float v = dot(center - ray.origin, ray.direction);
-        float disc = pow(radius,2.0) - pow(distance(center, ray.origin), 2.0) + pow(v, 2.0);
+        vec3  eo = center - ray.origin;
+        float v  = dot(eo, ray.direction);
+        float disc = pow(radius, 2.0) - pow(distance(center, ray.origin), 2.0) + pow(v, 2.0);
 
-        if (disc > 0.0)
+        if (disc > -0.01 && v-sqrt(disc) > 0.01)
                 return ray.origin + ( v - sqrt(disc) )*ray.direction;   // point of intersection
         else
                 return vec3(NO_INTERSECTION, 0.0, 0.0);  // a way to return NO_INTERSECTION
@@ -154,10 +157,10 @@ Ray calculateNewRay(Ray incoming_ray, ivec2 intersectionObj)
                         if (intersectionObj.x == SPHERE_OBJECT)
                         {
                                 vec3 poi    = getSphereIntersection(incoming_ray, sphereCenters[i], sphereRadii[i]);
-                                vec3 normal = normalize(poi - incoming_ray.origin);
+                                vec3 normal = normalize(poi - sphereCenters[i]);
                                 float c1    = dot( normal, incoming_ray.direction);
 
-                                vec3  reflected_dir = incoming_ray.direction - 2.0*c1*normal;
+                                vec3  reflected_dir = normalize( incoming_ray.direction - 2.0*c1*normal );
                                 return Ray(poi, reflected_dir);
                         }
 

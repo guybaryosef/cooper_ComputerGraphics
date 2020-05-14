@@ -46,6 +46,7 @@ window.onload = function init()
 
     listenToEvents();
     render();
+
 };
 //  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -69,11 +70,9 @@ function listenToEvents()
                 break;
             case listenToEvents.arrows.up:
                 state.view.phi += 0.05;
-                state.view.phi = Math.min(Math.PI/2, Math.max(state.view.phi, -Math.PI/2));
                 break;
             case listenToEvents.arrows.down:
                 state.view.phi -= 0.05;
-                state.view.phi = Math.min(Math.PI/2, Math.max(state.view.phi, -Math.PI/2));
                 break;
         }
     };
@@ -84,6 +83,7 @@ function listenToEvents()
         state.ui.dragging = true;
         state.ui.mouse.lastX = event.clientX;
         state.ui.mouse.lastY = event.clientY;
+        console.log(state.view.eye);
     };
 
     document.getElementById("gl-canvas").onmouseup = (event)    => state.ui.dragging = false;
@@ -101,9 +101,8 @@ function listenToEvents()
             let dx = x_factor*(x - state.ui.mouse.lastX);
             let dy = -0.5*(y - state.ui.mouse.lastY);
 
-            state.view.theta += dx/100;
-            state.view.phi   -= dy/100;
-            state.view.phi = Math.min(Math.PI/2, Math.max(state.view.phi, -Math.PI/2));
+            state.view.theta += dy/100;
+            state.view.phi   += dx/100;
 
             state.ui.mouse.lastX = x;
             state.ui.mouse.lastY = y;
@@ -123,7 +122,7 @@ function render()
                             state.view.radius*Math.cos(state.view.phi)*Math.cos(state.view.theta));
 
     state.uniforms.basisVecs[0] = normalize(vec3(-state.view.eye[2], 0.0, state.view.eye[0]));
-    state.uniforms.basisVecs[1] = cross(state.uniforms.basisVecs[0], mult(vec3(-1.0, -1.0, -1.0), normalize(state.view.eye)) );
+    state.uniforms.basisVecs[1] = cross(state.uniforms.basisVecs[0], normalize(state.view.eye) );
 
     // update uniforms
     state.gl.uniform1i( state.uniforms.spheres.CountLoc, state.uniforms.spheres.Count);
